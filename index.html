@@ -407,8 +407,8 @@ footer strong{color:rgba(255,255,255,.75)}
 <div class="mobile-cta"><a href="#form">🚀 احجز مقعدك الآن</a></div>
 
 <script>
-var GFORM_URL='https://docs.google.com/forms/d/e/1FAIpQLScahGG_0sydQooj2E64x31WHmAkqh-Ef3KCi9pEdsqtpH1qAA/formResponse';
-var ENTRY={name:'entry.2005620554',email:'entry.1045781291',phone:'entry.1166974658',job:'entry.839337160',message:'entry.261075638'};
+var SCRIPT_URL='https://script.google.com/macros/s/AKfycbzR10bFztLrNyy8HrhH5CBqLMldR0fyAZYP5hy6smq_tlynpfQqcU6InZku8JGJiA-P/exec';
+var ENTRY={name:'entry.1285486101',email:'entry.1044884547',phone:'entry.1228674290',job:'entry.584238986',message:'entry.2020543147'};
 function doSubmit(){
   var name=document.getElementById('fn').value.trim();
   var email=document.getElementById('fe').value.trim();
@@ -424,7 +424,8 @@ function doSubmit(){
   var params=new URLSearchParams();
   params.append(ENTRY.name,name);params.append(ENTRY.email,email);
   params.append(ENTRY.phone,phone);params.append(ENTRY.job,job);params.append(ENTRY.message,msg);
-  var img=new Image();img.src=GFORM_URL+'?'+params.toString();
+  var img=new Image();img.src=SCRIPT_URL+'?'+params.toString();
+  fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,email:email,phone:phone,job:job,message:msg})}).catch(function(){});
   if(typeof fbq!=='undefined'){fbq('track','Lead',{content_category:'RCM',currency:'SAR'});}
   setTimeout(function(){document.getElementById('formWrap').style.display='none';document.getElementById('formSuccess').style.display='block';},800);
 }
