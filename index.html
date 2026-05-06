@@ -426,7 +426,12 @@ function doSubmit(){
   var img=new Image();img.src=SCRIPT_URL+'?'+params.toString();
   fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,email:email,phone:phone,job:job,message:msg})}).catch(function(){});
   if(typeof fbq!=='undefined'){fbq('track','Lead',{content_category:'RCM',currency:'SAR'});}
-  setTimeout(function(){document.getElementById('formWrap').style.display='none';document.getElementById('formSuccess').style.display='block';},800);
+  setTimeout(function(){
+    document.getElementById('formWrap').style.display='none';
+    document.getElementById('formSuccess').style.display='block';
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({event:'form_success',course:'RCM25'});
+  },800);
 }
 function toggleFaq(el){var item=el.parentNode;var open=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open')});if(!open)item.classList.add('open')}
 var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target);}});},{threshold:0.1});
