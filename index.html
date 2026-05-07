@@ -406,8 +406,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="mobile-cta"><a href="#form">🚀 احجز مقعدك الآن</a></div>
 
 <script>
-var SCRIPT_URL='https://script.google.com/macros/s/AKfycbzR10bFztLrNyy8HrhH5CBqLMldR0fyAZYP5hy6smq_tlynpfQqcU6InZku8JGJiA-P/exec';
-var ENTRY={name:'entry.1285486101',email:'entry.1044884547',phone:'entry.1228674290',job:'entry.584238986',message:'entry.2020543147'};
+var SCRIPT_URL='https://script.google.com/macros/s/AKfycbwdC8Kik511nWkFDqDGp7mozyL9ySbkj5QdM71u-B4nfYF4TkvFIoHbbEJT6h8-Xibt/exec';
+function getUTM(param){var u=new URLSearchParams(window.location.search);return u.get(param)||'';}
 function doSubmit(){
   var name=document.getElementById('fn').value.trim();
   var email=document.getElementById('fe').value.trim();
@@ -420,11 +420,13 @@ function doSubmit(){
   if(!job){alert('يرجى إدخال المسمى الوظيفي');return}
   var btn=document.getElementById('submitBtn');
   btn.disabled=true;btn.textContent='⏳ جاري الإرسال...';
-  var params=new URLSearchParams();
-  params.append(ENTRY.name,name);params.append(ENTRY.email,email);
-  params.append(ENTRY.phone,phone);params.append(ENTRY.job,job);params.append(ENTRY.message,msg);
-  var img=new Image();img.src=SCRIPT_URL+'?'+params.toString();
-  fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,email:email,phone:phone,job:job,message:msg})}).catch(function(){});
+  var payload={
+    name:name,email:email,phone:phone,job:job,message:msg,
+    utm_source:getUTM('utm_source'),
+    utm_medium:getUTM('utm_medium'),
+    utm_campaign:getUTM('utm_campaign')
+  };
+  fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(function(){});
   if(typeof fbq!=='undefined'){fbq('track','Lead',{content_category:'RCM',currency:'SAR'});}
   setTimeout(function(){
     document.getElementById('formWrap').style.display='none';
